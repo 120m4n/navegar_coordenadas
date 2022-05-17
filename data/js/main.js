@@ -3,10 +3,14 @@ import { Circle, Fill, Style } from "ol/style";
 import { Feature, Button, Map, Overlay, View } from "ol/index";
 import { OSM, Vector as VectorSource } from "ol/source";
 import { Point } from "ol/geom";
-import { MapboxVector, Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
+import {
+  MapboxVector,
+  Tile as TileLayer,
+  Vector as VectorLayer,
+} from "ol/layer";
 import { useGeographic } from "ol/proj";
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-import 'sweetalert2/src/sweetalert2.scss';
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 //import * as Coordinates from './app.js';
 useGeographic();
 
@@ -26,49 +30,49 @@ const map = new Map({
 
 class Modal {
   constructor(modal, target) {
-      this.isOpen = false;
-      this.modal = modal;
-      this.target = target;
-      this.closeModal = modal.querySelectorAll('[data-close]');
+    this.isOpen = false;
+    this.modal = modal;
+    this.target = target;
+    this.closeModal = modal.querySelectorAll("[data-close]");
 
-      this.target.addEventListener("click", (e) => {
-          if (this.isOpen) {
-              return this.close();
-          }
-          return this.open();
+    this.target.addEventListener("click", (e) => {
+      document.getElementById("lat").value = "";
+      document.getElementById("lon").value = "";
+      if (this.isOpen) {
+        return this.close();
+      }
+      return this.open();
+    });
+    this.closeModal.forEach((item) => {
+      item.addEventListener("click", (e) => {
+        this.close();
       });
-      this.closeModal.forEach(item => {
-          item.addEventListener("click", (e) => {
-              this.close();
-          });
-      });
-  }  
+    });
+  }
   open() {
-      this.modal.classList.add('show-modal');
-      setTimeout(() => {
-          this.animateIn();
-      }, 10);
+    this.modal.classList.add("show-modal");
+    setTimeout(() => {
+      this.animateIn();
+    }, 10);
   }
   close() {
-      this.animateOut();
-      setTimeout(() => {
-          this.modal.classList.remove('show-modal');
-      }, 250);
+    this.animateOut();
+    setTimeout(() => {
+      this.modal.classList.remove("show-modal");
+    }, 250);
   }
   animateIn() {
-      this.modal.classList.add('animate-modal');
+    this.modal.classList.add("animate-modal");
   }
   animateOut() {
-      this.modal.classList.remove('animate-modal');
+    this.modal.classList.remove("animate-modal");
   }
 }
 
 const modal = new Modal(
-  document.querySelector('.modal'),
+  document.querySelector(".modal"),
   document.querySelector('[data-toggle="modal"]')
-  )
-
-
+);
 
 // fin modal
 
@@ -77,44 +81,67 @@ document.getElementById("getCoordinates").onclick = function (e) {
   latitud = document.getElementById("lat").value;
   longitud = document.getElementById("lon").value;
 
-  if (latitud === null || latitud === "" || longitud === null || longitud === "") {
+  if (
+    latitud === null ||
+    latitud === "" ||
+    longitud === null ||
+    longitud === ""
+  ) {
+    if (latitud === "" && longitud != "") {
+      document.getElementById("lat").focus();
+      Swal.fire({
+        title: "Error!",
+        text: "El campo latitud no puede estar vacio",
+        icon: "error",
+        confirmButtonText: "Volver",
+      });
+    } else if (longitud === "" && latitud != "") {
+      document.getElementById("lon").focus();
+      Swal.fire({
+        title: "Error!",
+        text: "El campo longitud no puede estar vacio",
+        icon: "error",
+        confirmButtonText: "Volver",
+      });
+    } else {
+      document.getElementById("lat").focus();
+      Swal.fire({
+        title: "Error!",
+        text: "No puede haber campos vacios",
+        icon: "error",
+        confirmButtonText: "Volver",
+      });
+    }
+  } else if (!(latitud >= -4.2250 && latitud <= 12.4627)) {
     Swal.fire({
-      title: 'Error!',
-      text: 'No puede haber un campo vacio',
-      icon: 'error',
-      confirmButtonText: 'volver'
+      title: "Error!",
+      text: "La latitud ingresada se encuentra fuera de la zona de cobertura",
+      icon: "error",
+      confirmButtonText: "volver",
     });
-    document.getElementById('lat').focus();
-  } else if (!(latitud >= -4.22500 && latitud <= 12.46277)) {
+  } else if (!(longitud >= -79.0063 && longitud <= -66.8483)) {
     Swal.fire({
-      title: 'Error!',
-      text: 'La latitud ingresada se encuentra fuera de la zona de cobertura',
-      icon: 'error',
-      confirmButtonText: 'volver'
-    });
-  } else if (!(longitud >= -79.00633 && longitud <= -66.84833)) {
-    Swal.fire({
-      title: 'Error!',
-      text: 'La longitud ingresada se encuentra fuera de la zona de cobertura',
-      icon: 'error',
-      confirmButtonText: 'volver'
+      title: "Error!",
+      text: "La longitud ingresada se encuentra fuera de la zona de cobertura",
+      icon: "error",
+      confirmButtonText: "volver",
     });
   } else {
     lonlat.push(longitud, latitud);
 
-     map.getView().animate({
-       center: lonlat,
-       zoom: 14,
-       duration: 2000, 
-     })
+    map.getView().animate({
+      center: lonlat,
+      zoom: 14,
+      duration: 2000,
+    });
 
-  //  var newView = new View({
-  //     center: lonlat,
-  //     zoom: 14
-  //   });
-  //    map.setView(newView);
-    
-    const point = new Point(lonlat)
+    //  var newView = new View({
+    //     center: lonlat,
+    //     zoom: 14
+    //   });
+    //    map.setView(newView);
+
+    const point = new Point(lonlat);
     var vectorLayer = new VectorLayer({
       source: new VectorSource({
         features: [new Feature(point)],
@@ -126,8 +153,7 @@ document.getElementById("getCoordinates").onclick = function (e) {
         }),
       }),
     });
+    modal.close();
     map.addLayer(vectorLayer);
-    
   }
-}
-
+};
