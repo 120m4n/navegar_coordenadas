@@ -4,3 +4,4 @@ examples/
 doc/
 gitbook*
 dist*
+.package-lock.json
