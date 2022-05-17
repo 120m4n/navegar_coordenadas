@@ -1,4 +1,42 @@
-.modal-content {
+/* html,
+body,
+.map{
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Helvetica, Arial, sans-serif;
+  }    */
+  
+/* media queries */
+@media screen and (max-width: 800px) {
+  
+.btn-coordinate {
+      top: 13.3em;
+      left: 0.5em;
+    }
+  }
+  
+.btn-coordinate {
+    border: 0.2rem solid rgba(204, 229, 239, 1);
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    margin: 1px;
+    padding: 0;
+    height: 2em;
+    background-color: rgba(0, 60, 136, 0.5);
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    width: 27px;
+    color: white;
+    padding: 11px;
+    top: 15.5em;
+    left: 0.5em;
+
+  }
+  
+  .modal-content {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -7,17 +45,18 @@
     background-color: #fff;
     background-clip: padding-box;
     border-radius: 10px 10px 5px 5px;
-}
-
-.form-latitud {
+    border:none;
+  }
+  
+  .form-latitud {
     margin: 5% 0 0 0;
     font-size: 0.755rem;
     text-transform: uppercase;
     color: rgba(35, 28, 99, 0.7);
     font-weight: 500;
-}
-
-.form-latitud input {
+  }
+  
+  .form-latitud input {
     display: block;
     width: 100%;
     padding: 0.467rem 0.6rem;
@@ -29,17 +68,17 @@
     background-clip: padding-box;
     border: 1px solid #dfe3e7;
     border-radius: 0.25rem;
-}
-
-.form-longitud {
+  }
+  
+  .form-longitud {
     margin: 5% 0 5% 0;
     font-size: 0.755rem;
     text-transform: uppercase;
     color: rgba(35, 28, 99, 0.7);
     font-weight: 500;
-}
-
-.form-longitud input {
+  }
+  
+  .form-longitud input {
     display: block;
     width: 100%;
     padding: 0.467rem 0.6rem;
@@ -51,18 +90,18 @@
     background-clip: padding-box;
     border: 1px solid #dfe3e7;
     border-radius: 0.25rem;
-}
-
-.form-button {
+  }
+  
+  .form-button {
     display: flex;
     margin: 2px;
     width: 100%;
     flex-direction: column;
     align-content: flex-end;
     flex-wrap: wrap;
-}
-
-.form-button button {
+  }
+  
+  .form-button button {
     width: 100px;
     background-color: #4385f5;
     color: white;
@@ -72,13 +111,13 @@
     padding: 10px;
     font-size: 0.855rem;
     border-radius: 0.267rem;
-}
-
-.form-button button:hover {
+  }
+  
+  .form-button button:hover {
     background-color: #7b98bc;
-}
-
-.modal {
+  }
+  
+  .modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -88,66 +127,110 @@
     height: 100%;
     overflow: hidden;
     outline: 0;
-}
-
-.modal-header {
+  }
+  
+  .modal-header {
     display: flex;
     padding: 1rem 1rem;
     border-radius: 5px 5px 0 0;
     background-color: #4385f5;
-    height: 15px;
+    height: 45px;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-}
-
-.modal-dialog {
+  }
+  
+  .modal-dialog {
     position: relative;
     width: 80%;
     margin: 1.5rem;
     pointer-events: none;
-}
-
-.modal-title {
+  }
+  
+  .modal-title {
     margin: 0;
     line-height: 1.5;
     color: rgb(255, 255, 255);
     font-size: 1.0rem;
     font-weight: 400;
-}
-
-.modal-body {
+  }
+  
+  .modal-body {
     padding: 1rem;
     margin: 0 10% 0 7%;
-}
-
-.modal-body h1 {
+  }
+  
+  .modal-body h1 {
     margin-top: 0;
-}
-
-.modal-header button {
+  }
+  
+  .modal-header button {
     font-size: 1.2rem;
     background: none;
     border: none;
     cursor: pointer;
     color: white;
     position: fixed;
-}
-
-.show-modal.modal {
+  }
+  
+  .show-modal.modal {
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.3);
-}
-
-.modal-dialog {
+  }
+  
+  .modal-dialog {
     opacity: 0;
     transform: translateY(-100px);
     transition: 300ms opacity ease-out, 300ms transform ease-out;
-}
-
-.modal.animate-modal .modal-dialog {
+  }
+  
+  .modal.animate-modal .modal-dialog {
     opacity: 1;
     transform: translateY(0);
-}
+  }
+  
+  @media only screen and (min-width: 801px) {
+    .modal-dialog {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      position: relative;
+      height: 100px;
+      object-fit: contain;
+      margin: 0 auto;
+    }
+  
+    .modal-header button {
+      padding: 5%;
+      left: 90%;
+      
+    }
+    .form-button {
+      margin: 5% 0 0 5%;
+     }
+  }
+  
+  @media only screen and (min-width: 100px) and (max-width: 800px) {
+    .modal-dialog {
+      position: relative;
+      top: -106px;
+      height: 100px;
+      margin: 10%;
+    }
+  
+    .modal-header button {
+      padding: 5%;
+      left: 85%;
+    }
+    .modal-body {
+      margin: 0 10% 0 2%;
+      padding-bottom: 5%;
+    }
+    .form-button {
+    margin: 10% 0 0 10%;
+   }
+  }
