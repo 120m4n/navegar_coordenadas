@@ -5,3 +5,5 @@ doc/
 gitbook*
 dist*
 .package-lock.json
+punto_Colombia/colombia.geojson
+package-lock.json
